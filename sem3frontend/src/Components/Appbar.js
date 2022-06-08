@@ -12,7 +12,7 @@ export default function DenseAppBar() {
             <AppBar position="static">
                 <Toolbar variant="dense">
                     <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-                        <MenuIcon />
+                        {/*<MenuIcon />*/}
                     </IconButton>
                     <Typography variant="h6" color="inherit" component="div">
                         Something

@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/Frenske-tech/sem3Frontend/issues"
   },
-  "homepage": "https://github.com/Frenske-tech/sem3Frontend#readme"
+  "homepage": "https://github.com/Frenske-tech/sem3Frontend#readme",
+  "dependencies": {
+    "@auth0/auth0-react": "^1.10.1",
+    "react-router-dom": "^6.3.0"
+  }
 }

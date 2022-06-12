@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import {Button, Container, Paper} from "@mui/material";
+import {Button, Container, Paper, Rating} from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,9 +16,10 @@ export default function Review() {
     const paperStyle={padding: '50px 20px', width:'600', margin: '20px auto'}
     const [name, setname ]= useState('')
     const [rtext, setrtext] = useState('')
+    const [rs, setrs] = useState()
     const [review, setreview] = useState([])
 
-    const Savedata=(e)=>{
+    const SaveReview=(e)=>{
         e.preventDefault()
         const review={name, rtext}
         console.log(review)
@@ -30,6 +31,16 @@ export default function Review() {
                 console.log("review added")
                 setname("");
                 setrtext("");
+        })
+    }
+    function DeleteReview(id){
+        console.log(id);
+        fetch(`http://localhost:8080/review/${id}`,{
+            method: "DELETE",
+            headers:{"Content-Type": "application/json"},
+            body: JSON.stringify(review)
+        }).then(()=> {
+            window.location.reload();
         })
     }
     useEffect(() =>{
@@ -53,7 +64,9 @@ export default function Review() {
                        onChange={(e)=>setname(e.target.value)}/>
             <TextField id="rtext" label="Review" variant="outlined" fullWidth value={rtext}
                        onChange={(e)=>setrtext(e.target.value)}/>
-            <Button variant="text" onClick={Savedata}>Save review</Button>
+            <Rating name="size-medium" id="rs" defaultValue={2}  onChange={(e)=>setrs(e.target.value)}/><br/>
+
+            <Button variant="text" onClick={SaveReview}>Save review</Button>
         </form>
             </Paper>
 
@@ -61,8 +74,10 @@ export default function Review() {
             <Paper elevation={3} style={paperStyle}>
                 {review.map(review => (
                     <Paper elevation={6} style={{margin: "10%", padding: "10%", textAlign: "left"}} key={review.id}>
-                        Name: {review.name}<br/>
+                        gameName: {review.name}<br/>
                         Review: {review.rtext}
+                        <Button variant="text" onClick={()=>DeleteReview(review.id)}>Delete review</Button>
+
                     </Paper>
                 ))
                 }

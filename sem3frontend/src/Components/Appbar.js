@@ -8,7 +8,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {Button} from "@mui/material";
 
 export default function DenseAppBar() {
-    let history = useNavigate();
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">

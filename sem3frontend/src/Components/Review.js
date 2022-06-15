@@ -16,22 +16,28 @@ export default function Review() {
     const paperStyle={padding: '50px 20px', width:'600', margin: '20px auto'}
     const [name, setname ]= useState('')
     const [rtext, setrtext] = useState('')
-    const [rs, setrs] = useState()
+    const [reviewScore, setrs] = useState()
     const [review, setreview] = useState([])
 
     const SaveReview=(e)=>{
         e.preventDefault()
-        const review={name, rtext}
+        const review={name, rtext, reviewScore}
         console.log(review)
-        fetch("http://localhost:8080/review/add",{
-            method: "POST",
-            headers:{"Content-Type": "application/json"},
-            body: JSON.stringify(review)
-            }).then(()=> {
+        if(name === "" || rtext === ""){
+            console.log("haha")
+        }else {
+            fetch("http://localhost:8080/review/add", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(review)
+            }).then(() => {
                 console.log("review added")
                 setname("");
                 setrtext("");
-        })
+                window.location.reload();
+
+            })
+        }
     }
     function DeleteReview(id){
         console.log(id);
@@ -64,7 +70,7 @@ export default function Review() {
                        onChange={(e)=>setname(e.target.value)}/>
             <TextField id="rtext" label="Review" variant="outlined" fullWidth value={rtext}
                        onChange={(e)=>setrtext(e.target.value)}/>
-            <Rating name="size-medium" id="rs" defaultValue={2}  onChange={(e)=>setrs(e.target.value)}/><br/>
+            <Rating name="size-medium" id="reviewScore" defaultValue={2}  onChange={(e)=>setrs(e.target.value)}/><br/>
 
             <Button variant="text" onClick={SaveReview}>Save review</Button>
         </form>
@@ -77,7 +83,8 @@ export default function Review() {
                         gameName: {review.name}<br/>
                         Review: {review.rtext}
                         <Button variant="text" onClick={()=>DeleteReview(review.id)}>Delete review</Button>
-
+                        <br/>
+                            <Rating name="size-medium" id="rs" value={review.reviewScore}/>
                     </Paper>
                 ))
                 }
